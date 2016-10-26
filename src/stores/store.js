@@ -1,9 +1,13 @@
-import { observable, computed } from 'mobx';
+import { observable } from 'mobx';
+import fetch from 'isomorphic-fetch';
 
 class Store {
-  @observable value = 'Bartek';
-  @computed get decorated() {
-    return `${this.value} is awesome!`;
+  @observable fetched = false;
+
+  fetchData() {
+    fetch('https://api.github.com/repos/burczu/react-redux-ajax-example/branches')
+      .then(() => this.fetched = true)
+      .catch(() => this.fetched = false);
   }
 }
 
